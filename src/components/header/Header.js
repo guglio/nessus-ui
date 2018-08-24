@@ -15,7 +15,7 @@ const Header = (props) => {
   const { classes } = props;
   return (
     <div className={classes.root}>
-      <AppBar position="fixed" color="default">
+      <AppBar position="fixed">
         <Toolbar>
           <Typography variant="title" color="inherit">
             Nessus
