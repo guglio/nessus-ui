@@ -5,42 +5,31 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import Typography from '@material-ui/core/Typography';
 
 import AlertDialog from '../alert-dialog/AlertDialog';
+import NodeInput from '../nodes-input/NodesInput';
+import { NESSUS_NODES } from '../../constants/';
 
-const NESSUS_NODES = {
-  ERROR: "ERROR",
-  LOADING: "LOADING",
-  READY: "READY"
-}
+import './Main.css';
 
 class Main extends Component{
   constructor(props){
     super(props);
     this.state = {
       error: null,
-      nessus_nodes: NESSUS_NODES.LOADING,
+      nessus_nodes: null,
       nodes: []
     }
   }
 
   requestNodes = (n) => {
+    this.setState({nessus_nodes: NESSUS_NODES.LOADING})
     getNodes(n)
     .then( result =>
         this.setState({
           nessus_nodes: NESSUS_NODES.READY,
           nodes: result.data.configurations
         })
-
     )
     .catch( error => {
-      if (error.response){
-        console.log(error.response.status);
-      }
-      else if (error.request){
-        console.log(error.request);
-      }
-      else{
-        console.log('Error', error.message);
-      }
       this.setState({
         nessus_nodes: NESSUS_NODES.ERROR,
         error: error.message
@@ -48,42 +37,36 @@ class Main extends Component{
     });
   }
 
-  componentDidMount(){
-    this.requestNodes(10000);
-  }
-
-  renderError(){
-    return(
-      <AlertDialog errorText={this.state.error} errorTitle="Unexpected error"/>
-    );
-  }
-
-  renderTable(){
+  render(){
+    const { ERROR, LOADING, READY } = NESSUS_NODES;
+    const { nessus_nodes } = this.state;
     return(
       <div>
         <Typography variant="display1" gutterBottom>
           Nodes
         </Typography>
-        <NodesTable nodes={this.state.nodes} />
+        <NodeInput requestNodes={this.requestNodes}/>
+        {
+          nessus_nodes === READY &&
+          <NodesTable
+            nodes={this.state.nodes}
+          />
+        }
+        {
+          nessus_nodes === LOADING &&
+          <div className="loadingWrapper">
+            <CircularProgress />
+          </div>
+        }
+        {
+          nessus_nodes === ERROR &&
+          <AlertDialog
+            errorText={this.state.error}
+            errorTitle="Unexpected error"
+          />
+        }
       </div>
-    );
-  }
-
-  renderLoading(){
-    return <CircularProgress />;
-  }
-
-  render(){
-    const { nessus_nodes } = this.state;
-    const { ERROR, LOADING, READY } = NESSUS_NODES;
-
-    switch(nessus_nodes){
-      case ERROR: return this.renderError();
-      case LOADING: return this.renderLoading();
-      case READY: return this.renderTable();
-      default: return this.renderLoading();
-    }
-
+    )
   }
 }
 
