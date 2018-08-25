@@ -1,73 +1,124 @@
 import React, { Component } from 'react';
-import NodesTable from '../nodes-table/NodesTable';
-import { getNodes } from '../../services/';
-import CircularProgress from '@material-ui/core/CircularProgress';
+import PropTypes from 'prop-types';
+
 import Typography from '@material-ui/core/Typography';
-
+import CircularProgress from '@material-ui/core/CircularProgress';
+import { withStyles } from '@material-ui/core/styles';
 import AlertDialog from '../alert-dialog/AlertDialog';
-import NodeInput from '../nodes-input/NodesInput';
-import { NESSUS_NODES } from '../../constants/';
 
-import './Main.css';
+import { getHosts } from '../../services/';
+
+import HostsInput from '../hosts-input/HostsInput';
+import HostsTable from '../hosts-table/HostsTable';
+
+import { NESSUS_HOSTS, ERROR } from '../../constants/';
+
+const styles = theme => ({
+  loadingWrapper: {
+    position: 'absolute',
+    top: 'calc(50% - 20px)',
+    left: 'calc(50% - 20px)',
+  },
+  title:{
+    marginBottom:'1em'
+  }
+});
+
+
 
 class Main extends Component{
   constructor(props){
     super(props);
     this.state = {
       error: null,
-      nessus_nodes: null,
-      nodes: []
+      nessus_hosts: null,
+      hosts: [],
+      initialHosts: [],
     }
   }
 
-  requestNodes = (n) => {
-    this.setState({nessus_nodes: NESSUS_NODES.LOADING})
-    getNodes(n)
+  componentDidMount(){
+    this.requestHosts(this.props.hostsNumber);
+  }
+
+  searchData = (filter) => {
+    if(filter && filter !== ''){
+      let hosts = this.state.initialHosts.filter( host => {
+        let hostString = Object.values(host).join('').toLowerCase();
+        return hostString.indexOf(filter.toLowerCase()) > -1
+      });
+      this.setState({hosts});
+    }
+    else{
+      this.setState({hosts : this.state.initialHosts});
+    }
+  }
+
+  requestHosts = (n) => {
+    this.setState({nessus_hosts: NESSUS_HOSTS.LOADING})
+    getHosts(n)
     .then( result =>
         this.setState({
-          nessus_nodes: NESSUS_NODES.READY,
-          nodes: result.data.configurations
+          nessus_hosts: NESSUS_HOSTS.READY,
+          hosts: result.data.configurations,
+          initialHosts: result.data.configurations
         })
     )
     .catch( error => {
+      const errorCode = error.status ? error.response.status : 503;
       this.setState({
-        nessus_nodes: NESSUS_NODES.ERROR,
-        error: error.message
+        nessus_hosts: NESSUS_HOSTS.ERROR,
+        error: ERROR[errorCode] ? ERROR[errorCode] : ERROR.DEFAULT
       });
     });
   }
 
   render(){
-    const { ERROR, LOADING, READY } = NESSUS_NODES;
-    const { nessus_nodes } = this.state;
+    const { ERROR, LOADING, READY } = NESSUS_HOSTS;
+    const { nessus_hosts, error, hosts } = this.state;
+    const { classes } = this.props;
+
     return(
       <div>
-        <Typography variant="display1" gutterBottom>
-          Nodes
+        <Typography
+          variant="display1"
+          gutterBottom
+          className={classes.title}
+        >
+          Hosts
         </Typography>
-        <NodeInput requestNodes={this.requestNodes}/>
+        <HostsInput
+          searchData={this.searchData}
+        />
+
         {
-          nessus_nodes === READY &&
-          <NodesTable
-            nodes={this.state.nodes}
+          nessus_hosts === READY &&
+          <HostsTable
+            hosts={hosts}
           />
         }
         {
-          nessus_nodes === LOADING &&
-          <div className="loadingWrapper">
+          nessus_hosts === LOADING &&
+          <div className={classes.loadingWrapper}>
             <CircularProgress />
           </div>
         }
         {
-          nessus_nodes === ERROR &&
+          nessus_hosts === ERROR &&
           <AlertDialog
-            errorText={this.state.error}
-            errorTitle="Unexpected error"
+            errorText={error}
+            errorTitle="Oops! Something went wrong."
           />
         }
+
       </div>
     )
   }
 }
+Main.propTypes = {
+  classes: PropTypes.object.isRequired,
+  hostsNumber: PropTypes.number.isRequired,
+};
 
-export default Main;
+
+export default withStyles(styles)(Main);
