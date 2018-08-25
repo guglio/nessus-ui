@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+
 import { withStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TablePagination from '@material-ui/core/TablePagination';
@@ -16,11 +17,11 @@ const styles = theme => ({
     marginTop: theme.spacing.unit * 3,
   },
   table: {
-    tableLayout: 'fixed'
+    // tableLayout: 'fixed'
   }
 });
 
-class NodesTable extends Component {
+class HostsTable extends Component {
   constructor(props){
     super(props);
     this.state = {
@@ -28,7 +29,6 @@ class NodesTable extends Component {
       rowsPerPage: 5,
       order: ORDER.ASC,
       orderBy: TABLE_HEADER[0].value,
-      nodes:this.props.nodes,
     }
   }
 
@@ -54,7 +54,7 @@ class NodesTable extends Component {
  };
 
 
-  sortNodes = (orderBy) => {
+  sortHosts = (orderBy) => {
     let order = '';
     const { ASC, DESC } = ORDER;
 
@@ -71,20 +71,20 @@ class NodesTable extends Component {
 
 
   render(){
-    const { classes } = this.props;
-    const { page, rowsPerPage, order, orderBy, nodes } = this.state;
+    const { classes, hosts } = this.props;
+    const { page, rowsPerPage, order, orderBy } = this.state;
 
     return (
       <Paper className={classes.root}>
         <Table className={classes.table}>
           <TableHeader
-            sortNodes={this.sortNodes}
+            sortHosts={this.sortHosts}
             headers={TABLE_HEADER}
             orderBy={orderBy}
             order={order}
           />
           <TableContent
-            data={nodes}
+            data={hosts}
             order={order}
             orderBy={orderBy}
             page={page}
@@ -94,7 +94,7 @@ class NodesTable extends Component {
         </Table>
         <TablePagination
             component="div"
-            count={nodes.length}
+            count={hosts.length}
             rowsPerPage={rowsPerPage}
             page={page}
             backIconButtonProps={{
@@ -111,9 +111,9 @@ class NodesTable extends Component {
   }
 }
 
-NodesTable.propTypes = {
+HostsTable.propTypes = {
   classes: PropTypes.object.isRequired,
-  nodes: PropTypes.array.isRequired,
+  hosts: PropTypes.array.isRequired,
 };
 
-export default withStyles(styles)(NodesTable);
+export default withStyles(styles)(HostsTable);
