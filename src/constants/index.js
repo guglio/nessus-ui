@@ -1,20 +1,15 @@
 export const THEME = {
   palette: {
     primary: {
-      light: '#63a4ff',
-      main: '#1976d2',
-      dark: '#004ba0',
+      main: '#293845',
       contrastText: '#fff',
     },
     secondary: {
-      light: '#ae52d4',
       main: '#7b1fa2',
-      dark: '#4a0072',
       contrastText: '#fff',
     }
   }
 }
-
 
 export const ORDER = {
   ASC: 'asc',
@@ -23,7 +18,7 @@ export const ORDER = {
 
 export const TABLE_HEADER = [
   {
-    'name': 'Node Name',
+    'name': 'Name',
     'numeric': false,
     'value': 'name'
   },
@@ -44,8 +39,14 @@ export const TABLE_HEADER = [
   }
 ];
 
-export const NESSUS_NODES = {
+export const NESSUS_HOSTS = {
   ERROR: "ERROR",
   LOADING: "LOADING",
   READY: "READY"
+}
+
+export const ERROR = {
+  404: 'The URL you were trying to reach could not be found on the server.',
+  503: 'The server is currently unable to handle the request due to a temporary overloading or maintenance of the server.',
+  DEFAULT: 'Unable to preceed with your request.'
 }
