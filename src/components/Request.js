@@ -29,7 +29,7 @@ class Request extends Component{
   constructor(props){
     super(props);
     this.state = {
-      hostsNumber: this.props.hostsNumber,
+      hostsNumber: this.props.hostsNumber ? this.props.hostsNumber : 2,
     }
   }
 
@@ -87,6 +87,7 @@ class Request extends Component{
             label="Hosts number"
             placeholder="Hosts"
             value={hostsNumber}
+            type="number"
             onChange={(e) => this.handleChange(e)}
           />
           <Button
