@@ -7,7 +7,7 @@ import TableSortLabel from '@material-ui/core/TableSortLabel';
 import Tooltip from '@material-ui/core/Tooltip';
 
 const TableHeader = props => {
-  const { sortNodes, headers, orderBy, order } = props;
+  const { sortHosts, headers, orderBy, order } = props;
 
   return(
     <TableHead>
@@ -26,7 +26,7 @@ const TableHeader = props => {
               <TableSortLabel
                 direction={order}
                 active={orderBy === cell.value}
-                onClick={() => sortNodes( cell.value )}
+                onClick={() => sortHosts( cell.value )}
               >
                 { cell.name }
               </TableSortLabel>
@@ -40,7 +40,7 @@ const TableHeader = props => {
 }
 
 TableHeader.propTypes = {
-  sortNodes: PropTypes.func.isRequired,
+  sortHosts: PropTypes.func.isRequired,
   headers: PropTypes.array.isRequired,
   orderBy: PropTypes.string.isRequired,
   order: PropTypes.string.isRequired,
