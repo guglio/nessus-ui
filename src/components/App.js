@@ -4,12 +4,12 @@ import PropTypes from 'prop-types';
 import Drawer from '@material-ui/core/Drawer';
 import { MuiThemeProvider, createMuiTheme, withStyles } from '@material-ui/core/styles';
 
-import { THEME } from '../../constants';
+import { THEME } from '../constants';
 
-import Header from '../header/Header';
-import LeftMenu from '../menu';
-import Main from '../main/Main';
-import Request from '../request/Request';
+import Header from './Header';
+import LeftMenu from './menu';
+import Main from './Main';
+import Request from './Request';
 
 const theme = createMuiTheme(THEME);
 const drawerWidth = 240;
@@ -21,7 +21,6 @@ const styles = theme => ({
     overflow: 'hidden',
     position: 'relative',
     display: 'flex',
-    height: '100vh',
   },
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
@@ -35,10 +34,7 @@ const styles = theme => ({
     backgroundColor: theme.palette.background.default,
     padding: theme.spacing.unit * 3,
     minWidth: 0, // So the Typography noWrap works
-  },
-  main: {
-    position:'relative',
-    backgroundColor:'purple',
+    minHeight:'100vh',
   },
   toolbar: theme.mixins.toolbar,
 });

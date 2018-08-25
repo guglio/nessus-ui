@@ -6,18 +6,15 @@ import Table from '@material-ui/core/Table';
 import TablePagination from '@material-ui/core/TablePagination';
 import Paper from '@material-ui/core/Paper';
 
-import TableHeader from '../../containers/TableHeader';
-import TableContent from '../../containers/TableContent';
+import TableHeader from '../containers/TableHeader';
+import TableContent from '../containers/TableContent';
 
-import { ORDER, TABLE_HEADER } from '../../constants/';
+import { ORDER, TABLE_HEADER } from '../constants/';
 
 const styles = theme => ({
   root: {
     width: '100%',
     marginTop: theme.spacing.unit * 3,
-  },
-  table: {
-    // tableLayout: 'fixed'
   }
 });
 

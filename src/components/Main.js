@@ -4,14 +4,14 @@ import PropTypes from 'prop-types';
 import Typography from '@material-ui/core/Typography';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { withStyles } from '@material-ui/core/styles';
-import AlertDialog from '../alert-dialog/AlertDialog';
 
-import { getHosts } from '../../services/';
+import { getHosts } from '../services/';
 
-import HostsInput from '../hosts-input/HostsInput';
-import HostsTable from '../hosts-table/HostsTable';
+import AlertDialog from './AlertDialog';
+import HostsInput from './HostsInput';
+import HostsTable from './HostsTable';
 
-import { NESSUS_HOSTS, ERROR } from '../../constants/';
+import { NESSUS_HOSTS, ERROR } from '../constants/';
 
 const styles = theme => ({
   loadingWrapper: {
@@ -90,7 +90,6 @@ class Main extends Component{
         <HostsInput
           searchData={this.searchData}
         />
-
         {
           nessus_hosts === READY &&
           <HostsTable

@@ -6,7 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 
-import config from '../../config.json';
+import config from '../config.json';
 
 const styles = theme => ({
   button: {
