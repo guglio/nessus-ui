@@ -1,17 +1,21 @@
 {
   "name": "nessus_ui",
+  "homepage": "https://guglio.github.io/nessus-ui/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
     "@material-ui/core": "^1.5.1",
     "@material-ui/icons": "^2.0.3",
     "axios": "^0.18.0",
+    "gh-pages": "^1.2.0",
     "react": "^16.4.2",
     "react-dom": "^16.4.2",
     "react-scripts": "1.1.5",
     "typeface-roboto": "0.0.54"
   },
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
