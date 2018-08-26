@@ -228,7 +228,7 @@ GitHub Pages doesn’t support routers that use the HTML5 `pushState` history AP
 
 ##### "/dev/tty: No such a device or address"
 
-If, when deploying, you get `/dev/tty: No such a device or address` or a similar error, try the follwing:
+If, when deploying, you get `/dev/tty: No such a device or address` or a similar error, try the following:
 
 1. Create a new [Personal Access Token](https://github.com/settings/tokens)
 2. `git remote set-url origin https://<user>:<token>@github.com/<user>/<repo>` .
@@ -243,6 +243,7 @@ Additional information on how to deploy to different platforms are available her
 * [MATERIAL-UI](https://material-ui.com/) - React components that implement Google's Material Design
 * [axios](https://github.com/axios/axios) - Promise based HTTP client for the browser and node.js
 * [Heroku](https://www.heroku.com) - cloud application server
+* [Custom API - nessus](https://github.com/guglio/nessus) - custom made API to populate the table
 * [npm](https://www.npmjs.com/) - Package manager
 * [Atom](https://atom.io/) - text editor
 * [gh-pages](https://github.com/tschaub/gh-pages) - deploy this application to GitHub
