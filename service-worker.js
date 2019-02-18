@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/nessus-ui/precache-manifest.ea4125ed0c606ca81c5342b855a30421.js"
+  "/nessus-ui/precache-manifest.82dcbbe433844e62b5111923ea169b3a.js"
 );
 
 workbox.clientsClaim();
